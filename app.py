@@ -18,21 +18,16 @@ def load_model():
 
 # Define Streamlit app
 def main():
-    # App title
     st.title("News Sentiment Analysis")
     
-    # Instructions
     st.write("Enter news text below to predict its sentiment:")
-    
-    # Text input
     text_input = st.text_area("News Text", height=150)
     
-    # Load the model, vectorizer, and label encoder
+    # Load model, vectorizer, and label encoder
     model = load_model()
     vectorizer = load_vectorizer()
     label_encoder = load_label_encoder()
 
-    # When the user submits text
     if st.button("Predict Sentiment"):
         if text_input:
             # Transform the input text
@@ -42,8 +37,11 @@ def main():
             prediction = model.predict(text_input_tfidf)
             predicted_sentiment = label_encoder.inverse_transform(prediction)[0]
             
-            # Display result
-            st.success(f"Predicted sentiment: {predicted_sentiment}")
+            # Display result for different sentiment cases
+            if predicted_sentiment == "positive":
+                st.success(f"Predicted sentiment: {predicted_sentiment}. The news has an optimistic and favorable tone.")
+            elif predicted_sentiment == "neutral":
+                st.error(f"Predicted sentiment: {predicted_sentiment}. The news contains negative or unfavorable information.")
         else:
             st.warning("Please enter some news text to analyze.")
 
