@@ -18,7 +18,7 @@ def load_model():
 
 # Define Streamlit app
 def main():
-    st.title("News Sentiment Analysis")
+    st.title("News Sentiment Analyzer")
     
     st.write("Enter news text below to predict its sentiment:")
     text_input = st.text_area("News Text", height=150)
