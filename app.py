@@ -3,13 +3,18 @@ import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import LabelEncoder
 
-# Load the pre-trained model, vectorizer, and label encoder
+# Load the pre-trained vectorizer and label encoder
+@st.cache_resource
+def load_vectorizer():
+    return pickle.load(open('tfidf_vectorizer.pkl', 'rb'))
+
+@st.cache_resource
+def load_label_encoder():
+    return pickle.load(open('label_encoder.pkl', 'rb'))
+
 @st.cache_resource
 def load_model():
-    model = pickle.load(open('sentiment_analysis_model.h5', 'rb'))
-    vectorizer = pickle.load(open('tfidf_vectorizer.pkl', 'rb'))
-    label_encoder = pickle.load(open('label_encoder.pkl', 'rb'))
-    return model, vectorizer, label_encoder
+    return pickle.load(open('sentiment_analysis_model.h5', 'rb'))
 
 # Define Streamlit app
 def main():
@@ -23,7 +28,9 @@ def main():
     text_input = st.text_area("News Text", height=150)
     
     # Load the model, vectorizer, and label encoder
-    model, vectorizer, label_encoder = load_model()
+    model = load_model()
+    vectorizer = load_vectorizer()
+    label_encoder = load_label_encoder()
 
     # When the user submits text
     if st.button("Predict Sentiment"):
