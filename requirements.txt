@@ -1,3 +1,7 @@
-streamlit
-requests
+python-dotenv
+flask
+flask-sqlalchemy
+flask-migrate 
+flask-bcrypt
+flask-login
 groq
